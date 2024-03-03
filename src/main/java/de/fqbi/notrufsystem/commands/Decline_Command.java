@@ -1,6 +1,6 @@
 package de.fqbi.notrufsystem.commands;
 
-import de.fqbi.notrufsystem.NotrufSystemPlugin;
+import de.fqbi.notrufsystem.NotrufSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,22 +21,26 @@ public class Decline_Command implements CommandExecutor {
                 if (player.hasPermission("ispolice")) {
                     Player creator = Bukkit.getPlayer(args[0]);
 
-                    if (!creator.isOnline())
-                        player.sendMessage("§7Der Spieler ist nicht online oder existiert nicht§8.");
+                    if (!creator.isOnline()) player.sendMessage("§7Der Spieler ist nicht online oder existiert nicht§8.");
 
-                    creator.sendMessage(NotrufSystemPlugin.getInstance().getData().prefix + "§7Dein Notruf wurde gelöscht!");
+                    if (NotrufSystem.getInstance().getData().getNotruf().containsKey(player)) {
+                        creator.sendMessage(NotrufSystem.getInstance().getData().prefix + "§7Dein Notruf wurde gelöscht!");
 
-                    Consumer<Player> funk = players -> {
-                        if (players.hasPermission("ispolice")) {
-                            players.sendMessage(NotrufSystemPlugin.getInstance().getData().funk_prefix + player.getName()
-                                    + "§7 hat den Notruf von §6" + creator.getName() + "§7 gelöscht.");
-                        }
-                    };
-                    funk.accept(player);
-                    NotrufSystemPlugin.getInstance().getData().getNotruf().remove(creator);
+                        Consumer<Player> funk = players -> {
+                            if (players.hasPermission("ispolice")) {
+                                players.sendMessage(NotrufSystem.getInstance().getData().funk_prefix + player.getName()
+                                        + "§7 hat den Notruf von §6" + creator.getName() + "§7 gelöscht.");
+                                NotrufSystem.getInstance().getAcceptCommand().getAccepted().remove(creator, true);
+                            }
+                        };
+                        funk.accept(player);
+                        NotrufSystem.getInstance().getData().getNotruf().remove(creator);
 
+                    } else {
+                        player.sendMessage(NotrufSystem.getInstance().getData().prefix + "§cDer Notruf existiert nicht mehr§8.");
+                    }
                 } else {
-                    player.sendMessage(NotrufSystemPlugin.getInstance().getData().prefix + "§cKeine Rechte§8.");
+                    player.sendMessage(NotrufSystem.getInstance().getData().prefix + "§cKeine Rechte§8.");
                 }
             }else {
                 player.sendMessage("Usage: /decline <Spielername>");

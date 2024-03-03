@@ -1,6 +1,6 @@
 package de.fqbi.notrufsystem.commands;
 
-import de.fqbi.notrufsystem.NotrufSystemPlugin;
+import de.fqbi.notrufsystem.NotrufSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -11,11 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class Notruf_Command implements CommandExecutor {
 
@@ -28,7 +26,7 @@ public class Notruf_Command implements CommandExecutor {
             if(player.hasPermission("ispolice")) {
                 Inventory inventory = Bukkit.createInventory(null, InventoryType.CHEST, "§7Notrufe");
 
-                for (Map.Entry<Player, String> entry : NotrufSystemPlugin.getInstance().getData().getNotruf().entrySet()) {
+                for (Map.Entry<Player, String> entry : NotrufSystem.getInstance().getData().getNotruf().entrySet()) {
 
                     ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
                     SkullMeta meta = (SkullMeta) itemStack.getItemMeta();
@@ -40,7 +38,7 @@ public class Notruf_Command implements CommandExecutor {
                 }
                 player.openInventory(inventory);
             }else{
-                player.sendMessage(NotrufSystemPlugin.getInstance().getData().prefix + "§cKeine Rechte§8.");
+                player.sendMessage(NotrufSystem.getInstance().getData().prefix + "§cKeine Rechte§8.");
             }
         }
         return false;

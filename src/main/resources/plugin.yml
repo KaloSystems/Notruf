@@ -1,7 +1,7 @@
 name: NotrufSystem
 version: 1.0.0
 author: _Fqbi
-main: de.fqbi.notrufsystem.NotrufSystemPlugin
+main: de.fqbi.notrufsystem.NotrufSystem
 
 commands:
   accept:

@@ -1,6 +1,6 @@
 package de.fqbi.notrufsystem.listener;
 
-import de.fqbi.notrufsystem.NotrufSystemPlugin;
+import de.fqbi.notrufsystem.NotrufSystem;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -26,7 +26,7 @@ public class InventoryClickListener implements Listener {
                 if (!(event.getCurrentItem().getType() != Material.SKULL_ITEM)) {
                     Player creator = Bukkit.getPlayer(event.getCurrentItem().getItemMeta().getDisplayName()
                             .replaceAll("§8» §b", ""));
-                    String reason = NotrufSystemPlugin.getInstance().getData().getNotruf().get(creator);
+                    String reason = NotrufSystem.getInstance().getData().getNotruf().get(creator);
 
                     double x = player.getLocation().getBlockX();
                     double y = player.getLocation().getBlockY();

@@ -1,6 +1,6 @@
 package de.fqbi.notrufsystem.commands;
 
-import de.fqbi.notrufsystem.NotrufSystemPlugin;
+import de.fqbi.notrufsystem.NotrufSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,27 +16,35 @@ public class Report_Command implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("report")){
 
-            if(args.length == 1){
+            if(args.length == 1) {
 
-                if(player.hasPermission("ispolice")) {
+                if (player.hasPermission("ispolice")) {
                     Player creator = Bukkit.getPlayer(args[0]);
 
-                    if (creator != null) player.sendMessage("§7Der Spieler ist nicht online oder existiert nicht§8.");
+                    if (!creator.isOnline())
+                        player.sendMessage("§7Der Spieler ist nicht online oder existiert nicht§8.");
 
-                    Consumer<Player> report = players -> {
-                        if (players.hasPermission("team")) {
-                            players.sendMessage(NotrufSystemPlugin.getInstance().getData().funk_prefix + player.getName()
-                                    + "§7 hat den Notruf von §6" + creator.getName() + "§7 gemeldet. \n" +
-                                    "\n§7Notruf Grund: §e" + NotrufSystemPlugin.getInstance().getData().getNotruf().get(creator));
-                        }
-                    };
-                    report.accept(player);
-                    NotrufSystemPlugin.getInstance().getData().getNotruf().remove(creator);
-                }else{
-                    player.sendMessage(NotrufSystemPlugin.getInstance().getData().prefix + "§cKeine Rechte§8.");
-                }
-            }else{
-                player.sendMessage("Usage: /report <Spielername>");
+                    if (NotrufSystem.getInstance().getData().getNotruf().containsKey(player)) {
+
+                        Consumer<Player> report = players -> {
+                            if (players.hasPermission("team")) {
+                                players.sendMessage(NotrufSystem.getInstance().getData().funk_prefix + player.getName()
+                                        + "§7 hat den Notruf von §6" + creator.getName() + "§7 gemeldet. \n" +
+                                        "\n§7Notruf Grund: §e" + NotrufSystem.getInstance().getData().getNotruf().get(creator));
+                                NotrufSystem.getInstance().getAcceptCommand().getAccepted().remove(creator, true);
+                            }
+                        };
+                        report.accept(player);
+                        NotrufSystem.getInstance().getData().getNotruf().remove(creator);
+                    } else {
+                        player.sendMessage(NotrufSystem.getInstance().getData().prefix + "§cDer Notruf existiert nicht mehr§8.");
+                    }
+
+                    } else {
+                        player.sendMessage(NotrufSystem.getInstance().getData().prefix + "§cKeine Rechte§8.");
+                    }
+                } else {
+                    player.sendMessage("Usage: /report <Spielername>");
             }
         }
         return false;

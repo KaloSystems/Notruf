@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Data {
 
@@ -18,5 +19,11 @@ public class Data {
 
     public ArrayList<Player> getNotrufCreate() {
         return notruf_create;
+    }
+
+    public String randomLocation(String[] array){
+        Random random = new Random();
+        int index = random.nextInt(array.length);
+        return array[index];
     }
 }

@@ -1,6 +1,6 @@
 package de.fqbi.notrufsystem.listener;
 
-import de.fqbi.notrufsystem.NotrufSystemPlugin;
+import de.fqbi.notrufsystem.NotrufSystem;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -20,20 +20,20 @@ public class PlayerChatListener implements Listener {
         Player player = event.getPlayer();
         String message = event.getMessage();
 
-        if(NotrufSystemPlugin.getInstance().getData().getNotrufCreate().contains(player)) {
+        if(NotrufSystem.getInstance().getData().getNotrufCreate().contains(player)) {
             if(message.equalsIgnoreCase("stop")) {
-                player.sendMessage(NotrufSystemPlugin.getInstance().getData().prefix + "§aDu hast erfolgreich dein Notruf" +
+                player.sendMessage(NotrufSystem.getInstance().getData().prefix + "§aDu hast erfolgreich dein Notruf" +
                         " abgebrochen§8.");
-                NotrufSystemPlugin.getInstance().getData().getNotrufCreate().remove(player);
+                NotrufSystem.getInstance().getData().getNotrufCreate().remove(player);
                 event.setCancelled(true);
                 return;
             }
 
-                NotrufSystemPlugin.getInstance().getData().getNotruf().put(player, message);
+                NotrufSystem.getInstance().getData().getNotruf().put(player, message);
 
                 Consumer<Player> playerConsumer = getPlayerConsumer(player);
                 playerConsumer.accept(player);
-                NotrufSystemPlugin.getInstance().getData().getNotrufCreate().remove(player);
+                NotrufSystem.getInstance().getData().getNotrufCreate().remove(player);
                 event.setCancelled(true);
         }
     }
@@ -42,6 +42,9 @@ public class PlayerChatListener implements Listener {
         double x = player.getLocation().getBlockX();
         double y = player.getLocation().getBlockY();
         double z = player.getLocation().getBlockZ();
+
+        String[] locations = { "Hensburg", "Zentrum", "JVA Spegelsbach", "Niebrück", "Goldschweig", "Hohenbrück",
+                "Gewerbegebiet Ost", "Krankenhaus Nord", "Westend"  };
 
         TextComponent accept = new TextComponent();
         accept.setText("§a§lAnnehmen");
@@ -62,8 +65,9 @@ public class PlayerChatListener implements Listener {
         delete.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/decline " + player.getName()));
 
         TextComponent main = new TextComponent("\n§8» §bNotruf von §7" + player.getName() + "§7 ist eingegangen. §8« \n" +
-                "\n§bGrund §8» §7" + NotrufSystemPlugin.getInstance().getData().getNotruf().get(player) + "\n" +
-                "§bOrt §8» §7Hensburg §8(§3" + x + " " + y + " " + z + "§8)\n\n");
+                "\n§bGrund §8» §7" + NotrufSystem.getInstance().getData().getNotruf().get(player) + "\n" +
+                "§bOrt §8» §7" + NotrufSystem.getInstance().getData().randomLocation(locations)
+                + " §8(§3" + x + " " + y + " " + z + "§8)\n\n");
         main.addExtra(accept);
         main.addExtra(" §8| ");
         main.addExtra(report);

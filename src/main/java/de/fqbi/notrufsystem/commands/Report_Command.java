@@ -24,18 +24,18 @@ public class Report_Command implements CommandExecutor {
                     if (!creator.isOnline())
                         player.sendMessage("§7Der Spieler ist nicht online oder existiert nicht§8.");
 
-                    if (NotrufSystem.getInstance().getData().getNotruf().containsKey(player)) {
+                    if (NotrufSystem.getInstance().getData().getCall().containsKey(player)) {
 
                         Consumer<Player> report = players -> {
                             if (players.hasPermission("team")) {
                                 players.sendMessage(NotrufSystem.getInstance().getData().funk_prefix + player.getName()
                                         + "§7 hat den Notruf von §6" + creator.getName() + "§7 gemeldet. \n" +
-                                        "\n§7Notruf Grund: §e" + NotrufSystem.getInstance().getData().getNotruf().get(creator));
+                                        "\n§7Notruf Grund: §e" + NotrufSystem.getInstance().getData().getCall().get(creator));
                                 NotrufSystem.getInstance().getAcceptCommand().getAccepted().remove(creator, true);
                             }
                         };
                         report.accept(player);
-                        NotrufSystem.getInstance().getData().getNotruf().remove(creator);
+                        NotrufSystem.getInstance().getData().getCall().remove(creator);
                     } else {
                         player.sendMessage(NotrufSystem.getInstance().getData().prefix + "§cDer Notruf existiert nicht mehr§8.");
                     }

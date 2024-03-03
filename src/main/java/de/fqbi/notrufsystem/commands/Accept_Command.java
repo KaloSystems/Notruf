@@ -28,7 +28,7 @@ public class Accept_Command implements CommandExecutor {
                     if (!creator.isOnline())
                         player.sendMessage("§7Der Spieler ist nicht online oder existiert nicht§8.");
 
-                    if (NotrufSystem.getInstance().getData().getNotruf().containsKey(player)) {
+                    if (NotrufSystem.getInstance().getData().getCall().containsKey(player)) {
 
                         if (accepted.containsKey(creator) != true) {
                             creator.sendMessage(NotrufSystem.getInstance().getData().prefix + "§7Dein Notruf wurde angenommen!");

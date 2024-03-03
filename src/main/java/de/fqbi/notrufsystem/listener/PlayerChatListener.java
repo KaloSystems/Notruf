@@ -20,20 +20,20 @@ public class PlayerChatListener implements Listener {
         Player player = event.getPlayer();
         String message = event.getMessage();
 
-        if(NotrufSystem.getInstance().getData().getNotrufCreate().contains(player)) {
+        if(NotrufSystem.getInstance().getData().getCreateCall().contains(player)) {
             if(message.equalsIgnoreCase("stop")) {
                 player.sendMessage(NotrufSystem.getInstance().getData().prefix + "§aDu hast erfolgreich dein Notruf" +
                         " abgebrochen§8.");
-                NotrufSystem.getInstance().getData().getNotrufCreate().remove(player);
+                NotrufSystem.getInstance().getData().getCreateCall().remove(player);
                 event.setCancelled(true);
                 return;
             }
 
-                NotrufSystem.getInstance().getData().getNotruf().put(player, message);
+                NotrufSystem.getInstance().getData().getCall().put(player, message);
 
                 Consumer<Player> playerConsumer = getPlayerConsumer(player);
                 playerConsumer.accept(player);
-                NotrufSystem.getInstance().getData().getNotrufCreate().remove(player);
+                NotrufSystem.getInstance().getData().getCreateCall().remove(player);
                 event.setCancelled(true);
         }
     }
@@ -43,8 +43,8 @@ public class PlayerChatListener implements Listener {
         double y = player.getLocation().getBlockY();
         double z = player.getLocation().getBlockZ();
 
-        String[] locations = {"Hensburg", "Zentrum", "JVA Spegelsbach", "Niebrück", "Goldschweig", "Hohenbrück",
-                "Gewerbegebiet Ost", "Krankenhaus Nord", "Westend"};
+        String[] locations = { "Hensburg", "Zentrum", "JVA Spegelsbach", "Niebrück", "Goldschweig", "Hohenbrück",
+                "Gewerbegebiet Ost", "Krankenhaus Nord", "Westend"  };
 
         TextComponent accept = new TextComponent();
         accept.setText("§a§lAnnehmen");
@@ -65,7 +65,7 @@ public class PlayerChatListener implements Listener {
         delete.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/decline " + player.getName()));
 
         TextComponent main = new TextComponent("\n§8» §bNotruf von §7" + player.getName() + "§7 ist eingegangen. §8« \n" +
-                "\n§bGrund §8» §7" + NotrufSystem.getInstance().getData().getNotruf().get(player) + "\n" +
+                "\n§bGrund §8» §7" + NotrufSystem.getInstance().getData().getCall().get(player) + "\n" +
                 "§bOrt §8» §7" + NotrufSystem.getInstance().getData().randomLocation(locations)
                 + " §8(§3" + x + " " + y + " " + z + "§8)\n\n");
         main.addExtra(accept);

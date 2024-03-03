@@ -26,7 +26,7 @@ public class Notruf_Command implements CommandExecutor {
             if(player.hasPermission("ispolice")) {
                 Inventory inventory = Bukkit.createInventory(null, InventoryType.CHEST, "§7Notrufe");
 
-                for (Map.Entry<Player, String> entry : NotrufSystem.getInstance().getData().getNotruf().entrySet()) {
+                for (Map.Entry<Player, String> entry : NotrufSystem.getInstance().getData().getCall().entrySet()) {
 
                     ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
                     SkullMeta meta = (SkullMeta) itemStack.getItemMeta();

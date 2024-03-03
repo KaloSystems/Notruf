@@ -26,7 +26,7 @@ public class InventoryClickListener implements Listener {
                 if (!(event.getCurrentItem().getType() != Material.SKULL_ITEM)) {
                     Player creator = Bukkit.getPlayer(event.getCurrentItem().getItemMeta().getDisplayName()
                             .replaceAll("§8» §b", ""));
-                    String reason = NotrufSystem.getInstance().getData().getNotruf().get(creator);
+                    String reason = NotrufSystem.getInstance().getData().getCall().get(creator);
 
                     double x = player.getLocation().getBlockX();
                     double y = player.getLocation().getBlockY();

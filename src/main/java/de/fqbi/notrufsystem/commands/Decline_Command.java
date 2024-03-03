@@ -23,7 +23,7 @@ public class Decline_Command implements CommandExecutor {
 
                     if (!creator.isOnline()) player.sendMessage("§7Der Spieler ist nicht online oder existiert nicht§8.");
 
-                    if (NotrufSystem.getInstance().getData().getNotruf().containsKey(player)) {
+                    if (NotrufSystem.getInstance().getData().getCall().containsKey(player)) {
                         creator.sendMessage(NotrufSystem.getInstance().getData().prefix + "§7Dein Notruf wurde gelöscht!");
 
                         Consumer<Player> funk = players -> {
@@ -34,7 +34,7 @@ public class Decline_Command implements CommandExecutor {
                             }
                         };
                         funk.accept(player);
-                        NotrufSystem.getInstance().getData().getNotruf().remove(creator);
+                        NotrufSystem.getInstance().getData().getCall().remove(creator);
 
                     } else {
                         player.sendMessage(NotrufSystem.getInstance().getData().prefix + "§cDer Notruf existiert nicht mehr§8.");

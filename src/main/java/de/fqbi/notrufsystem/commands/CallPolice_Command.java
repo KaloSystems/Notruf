@@ -15,9 +15,9 @@ public class CallPolice_Command implements CommandExecutor {
         if(command.getName().equalsIgnoreCase("callpolice")){
 
             if(args.length == 0) {
-                if(!NotrufSystem.getInstance().getData().getNotruf().containsKey(player)) {
+                if(!NotrufSystem.getInstance().getData().getCall().containsKey(player)) {
                     player.sendMessage("§bSchreibe nun eine Begründung für deinen Notruf in den Chat! Beachte Notrufmissbrauch ist strafbar!");
-                    NotrufSystem.getInstance().getData().getNotrufCreate().add(player);
+                    NotrufSystem.getInstance().getData().getCreateCall().add(player);
                 }else{
                     player.sendMessage(NotrufSystem.getInstance().getData().prefix + "§cDu hast bereits einen Notruf erstellt§8.");
                 }

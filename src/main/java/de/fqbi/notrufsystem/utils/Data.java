@@ -11,14 +11,14 @@ public class Data {
     public String prefix = "§c§lNotruf §8» §7";
     public String funk_prefix = "§b§lFunk §8» §7";
 
-    private HashMap<Player, String> notruf = new HashMap<>();
-    private ArrayList<Player> notruf_create = new ArrayList<>();
-    public HashMap<Player, String> getNotruf() {
-        return notruf;
+    private HashMap<Player, String> call = new HashMap<>();
+    private ArrayList<Player> call_create = new ArrayList<>();
+    public HashMap<Player, String> getCall() {
+        return call;
     }
 
-    public ArrayList<Player> getNotrufCreate() {
-        return notruf_create;
+    public ArrayList<Player> getCreateCall() {
+        return call_create;
     }
 
     public String randomLocation(String[] array){

@@ -21,6 +21,8 @@ public class InventoryClickListener implements Listener {
 
         if(event.getInventory().getTitle().equalsIgnoreCase("§7Notrufe")) {
             event.setCancelled(true);
+            if(event.getCurrentItem() != null) {
+
                 if (!(event.getCurrentItem().getType() != Material.SKULL_ITEM)) {
                     Player creator = Bukkit.getPlayer(event.getCurrentItem().getItemMeta().getDisplayName()
                             .replaceAll("§8» §b", ""));
@@ -61,5 +63,6 @@ public class InventoryClickListener implements Listener {
                     player.spigot().sendMessage(main);
                 }
             }
+        }
     }
 }

@@ -43,8 +43,8 @@ public class PlayerChatListener implements Listener {
         double y = player.getLocation().getBlockY();
         double z = player.getLocation().getBlockZ();
 
-        String[] locations = { "Hensburg", "Zentrum", "JVA Spegelsbach", "Niebrück", "Goldschweig", "Hohenbrück",
-                "Gewerbegebiet Ost", "Krankenhaus Nord", "Westend"  };
+        String[] locations = {"Hensburg", "Zentrum", "JVA Spegelsbach", "Niebrück", "Goldschweig", "Hohenbrück",
+                "Gewerbegebiet Ost", "Krankenhaus Nord", "Westend"};
 
         TextComponent accept = new TextComponent();
         accept.setText("§a§lAnnehmen");
